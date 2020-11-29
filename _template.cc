@@ -17,7 +17,9 @@ using namespace std;
 
 typedef long long ll;
 
+#define INF 1e9
 #define MAXN 100
+
 inline void dumpGraph(int graph[][MAXN], int r, int c) {
 #ifdef XDebug    
     for(int i = 0; i < r; ++i) {
