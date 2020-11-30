@@ -44,28 +44,24 @@ void dumpArray(int *dp, int r) {
 // CODE HERE
 int main(int argc, char const *argv[])
 {
-    int n, m;
-    cin >> n >> m;
-    vector<int> dp(m+1, 0);
-    vector<int> nums(n);
-
-    dp[0] = 1;
-    for(int i = 0; i < n; ++i) {
-        cin >> nums[i];
+    vector<int> nums;
+    int x;
+    while((scanf("%d", &x)) != EOF) {
+        nums.push_back(x);
     }
 
-    for(int i = 0; i < n; ++i) {
-        int w = 1;
-        for(int j = m; j >= 0; --j) {
-            for (int k = 1; k <= nums[i]; ++k) {
-                if (j < k) break;
-                dp[j] = (dp[j] + dp[j-k]) % 1000007;
-            }
-        }
-        // dumpArray(&dp[0], m+1);
+    int n = nums.size();
+    vector<int> dp(n,INF);
+    for(int i = n-1; i >= 0; --i) {
+        *upper_bound(dp.begin(), dp.end(), nums[i]) = nums[i];
     }
+    printf("%ld\n", lower_bound(dp.begin(), dp.end(), INF) - dp.begin());
     
+    fill(dp.begin(), dp.end(), INF);
+    for(int i = 0; i < n; ++i) {
+        *lower_bound(dp.begin(), dp.end(), nums[i]) = nums[i];
+    }
+    printf("%ld\n", lower_bound(dp.begin(), dp.end(), INF) - dp.begin());
 
-    cout << dp[m] << endl;
     return 0;
 }
