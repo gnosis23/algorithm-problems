@@ -44,9 +44,46 @@ inline void dumpArray(int *dp, int r) {
 
 // CODE HERE
 
+void solve() {
+    int n, t;
+    int sum = 0;
+    cin >> n >> t;
+    vector<int> length(n);
+    for(int i = 0; i < n; ++i) {
+        cin >> length[i];
+        sum += length[i];
+    }
+
+    vector<int> dp(t+1, 0);
+    vector<int> Count(t+1,0);
+
+    for(int i = 0; i < n; ++i) {
+        for(int j = t; j >= length[i]; --j) {
+            if (Count[j - length[i]] + 1 > Count[j]) {
+                dp[j] = dp[j - length[i]] + length[i];
+                Count[j] = Count[j - length[i]] + 1;
+            }
+            else if (
+                (Count[j - length[i]] + 1) == Count[j] &&
+                (dp[j-length[i]] + length[i]) > dp[j]
+            ) {
+                dp[j] = dp[j - length[i]] + length[i];
+            }
+        }
+    }
+    // dumpArray(&dp[0], t+1);
+    // dumpArray(&Count[0], t+1);
+
+    cout << Count[t-1] + 1 << " " << dp[t-1] + 678 << endl;
+}
+
 int main(int argc, char const *argv[])
 {
-    int n;
-    scanf("%d", &n);
+    int n, no = 1;
+    cin >> n;
+    while (no <= n) {
+        cout << "Case " << no++ << ": ";
+        solve();
+    }
     return 0;
 }
