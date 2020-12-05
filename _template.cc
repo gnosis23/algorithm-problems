@@ -1,3 +1,8 @@
+/**
+ * author: BohaoWang (bj050323@gmail.com)
+ * id:
+ * tag:
+ **/
 #include <iostream>
 #include <cstdio>
 #include <cstring>
@@ -46,7 +51,8 @@ inline void dumpArray(int *dp, int r) {
 
 int main(int argc, char const *argv[])
 {
+    ios_base::sync_with_stdio(false);
     int n;
-    scanf("%d", &n);
+    cin >> n;
     return 0;
 }
