@@ -16,9 +16,10 @@
 using namespace std;
 
 typedef long long ll;
+typedef pair<int,int> PII;
 
 #define INF 1e9
-#define MAXN 100001
+#define MAXN 102
 
 void dumpGraph(ll graph[][MAXN], int r, int c) {
 #ifdef XDebug    
@@ -32,7 +33,7 @@ void dumpGraph(ll graph[][MAXN], int r, int c) {
 #endif
 }
 
-void dumpArray(int *dp, int r) {
+void dumpArray(ll *dp, int r) {
 #ifdef XDebug   
     for(int i = 0; i < r; ++i) {
         cout << dp[i] << " ";
@@ -42,30 +43,68 @@ void dumpArray(int *dp, int r) {
 }
 
 // CODE HERE
-int main(int argc, char const *argv[])
-{
-    int n, m;
-    cin >> n >> m;
-    vector<int> dp(m+1, 0);
-    vector<int> nums(n);
-
-    dp[0] = 1;
+void solve() {
+    int n;
+    cin >> n;
+    vector<ll> nums(n);
+    vector<ll> dp(n);
+    vector<ll> sum(n,0);
     for(int i = 0; i < n; ++i) {
         cin >> nums[i];
     }
 
+    int pos = -1, neg = -1;
     for(int i = 0; i < n; ++i) {
-        int w = 1;
-        for(int j = m; j >= 0; --j) {
-            for (int k = 1; k <= nums[i]; ++k) {
-                if (j < k) break;
-                dp[j] = (dp[j] + dp[j-k]) % 1000007;
+        if (nums[i] < 0) {
+            if (pos == -1) {
+                dp[i] = 1;
+                sum[i] = nums[i];
+            }
+            else {
+                dp[i] = dp[pos] + 1;
+                sum[i] = sum[pos] + nums[i];    
+            }
+            if (neg == -1 || (dp[neg] < dp[i]) || (nums[neg] < nums[i])) {
+                neg = i;
+            }
+        } 
+        else {
+            if (neg == -1) {
+                dp[i] = 1;
+                sum[i] = nums[i];
+            }
+            else {
+                dp[i] = dp[neg] + 1;
+                sum[i] = sum[neg] + nums[i];
+            }
+            if (pos == -1 || (dp[pos] < dp[i]) || (nums[pos] < nums[i])) {
+                pos = i;
             }
         }
-        // dumpArray(&dp[0], m+1);
     }
-    
 
-    cout << dp[m] << endl;
+    int maxIndex = 0;
+    ll ans = sum[0];
+    for(int i = 1; i < n; ++i) {
+        if (dp[i] > dp[maxIndex]) {
+            maxIndex = i;
+            ans = sum[i];
+        }
+        else if (dp[i] == dp[maxIndex] && sum[i] > sum[maxIndex]) {
+            maxIndex = i;
+            ans = sum[i];
+        }
+    }
+    dumpArray(&dp[0], n);
+    cout << ans << endl;
+}
+
+int main(int argc, char const *argv[])
+{
+    int n;
+    cin >> n;
+    while (n--) {
+        solve();
+    }
     return 0;
 }
