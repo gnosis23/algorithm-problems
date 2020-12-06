@@ -1,7 +1,7 @@
 /**
  * author: BohaoWang (bj050323@gmail.com)
- * id:
- * tag:
+ * id: UVa1626 Brackets sequence
+ * tag: DP
  **/
 #include <iostream>
 #include <cstdio>
@@ -18,9 +18,6 @@
 #include <list>
 #include <algorithm>
 #include <climits>
-#ifdef XDebug
-#include "../debug.h" 
-#endif
 using namespace std;
 
 typedef long long ll;
@@ -29,17 +26,33 @@ typedef pair<int,int> PII;
 #define INF 1e9
 #define MAXN 100
 
-#ifndef XDebug
-#define dumpArray(...) 42
-#define dumpGraph(...) 42
+inline void dumpGraph(int graph[][MAXN], int r, int c) {
+#ifdef XDebug    
+    for(int i = 0; i < r; ++i) {
+        for(int j = 0; j < c; ++j) {
+            cout << graph[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
 #endif
+}
+
+inline void dumpArray(int *dp, int r) {
+#ifdef XDebug   
+    for(int i = 0; i < r; ++i) {
+        cout << dp[i] << " ";
+    }
+    cout << endl;
+#endif
+}
 
 // CODE HERE
 
 int main(int argc, char const *argv[])
 {
     ios_base::sync_with_stdio(false);
-    int n, t;
-    cin >> n >> t;
+    int n;
+    cin >> n;
     return 0;
 }
