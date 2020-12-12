@@ -3,3 +3,4 @@ app
 makefile
 sample.txt
 makefile
+.DS_Store

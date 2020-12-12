@@ -1,7 +1,7 @@
 /**
  * author: BohaoWang (bj050323@gmail.com)
- * id:
- * tag:
+ * id: https://codeforces.com/contest/1455/problem/D
+ * tag: DP greedy
  **/
 #include <iostream>
 #include <cstdio>
@@ -27,7 +27,7 @@ typedef long long ll;
 typedef pair<int,int> PII;
 
 #define INF 1e9
-#define MAXN 1000
+#define MAXN 501
 
 #ifndef XDebug
 #define dumpArray(...) 42
@@ -35,7 +35,9 @@ typedef pair<int,int> PII;
 #endif
 
 // CODE HERE
-bool need[MAXN];
+int dp[MAXN][MAXN];
+int nums[MAXN];
+
 int main(int argc, char const *argv[])
 {
     ios_base::sync_with_stdio(false);
@@ -43,60 +45,49 @@ int main(int argc, char const *argv[])
     cin >> ncases;
     while (ncases--) {
         int n, x;
-        int cnt = 0;
         cin >> n >> x;
-        vector<int> nums(n);
-        vector<int> nums2(n);
-        memset(need, 0, sizeof(need));
         for(int i = 0; i < n; ++i) {
             cin >> nums[i];
-            nums2[i] = nums[i];
         }
-        sort(nums2.begin(), nums2.end());
-        for(int i = 0; i < n; ++i) {
-            if (nums[i] != nums2[i]) {
-                need[i] = true;
-                cnt++;
+        
+        for(int i = 0; i <= n; ++i) {
+            fill(dp[i], dp[i] + MAXN, INF);
+        }
+
+        int ans = INF;
+        // current: x
+        if (nums[0] > x) {
+            dp[0][x] = 1;
+        }
+        int i;
+        for(i = 0; i < n; ++i) {
+            int pre = (i == 0) ? 0 : nums[i-1];
+            if (nums[i] > x && x >= pre) {
+                dp[i][x] = 1;
             }
+            if (nums[i] < pre) break;
         }
-        if (cnt == 0 || n == 1) {
-            cout << 0 << endl;
-            continue;
-        }
-        int ans = 0;
-        int k = 0;
-        for(k = 0; k < n; ++k) {
-            if (need[k]) {
-                if (k == n-1) {
-                    if (nums[k-1] <= nums[k]) {
-                        k++;
-                        break;
+        if (i == n) ans = 0;
+        for(i = 0; i < n; ++i) {
+            for(int j = 0; j <= 500; ++j) {
+                if (dp[i][j] == INF) continue;
+                x = nums[i];
+                int k = i + 1;
+                for(k = i+1; k < n; ++k) {
+                    int pre = (k == i+1) ? j : nums[k-1];
+                    if (nums[k] > x && x >= pre) {
+                        dp[k][x] = min(dp[k][x], dp[i][j] + 1);
                     }
-                    else if (nums[k] < x) {
-                        cout << "break:" << k << endl;
-                        break;
-                    }
+                    if (nums[k] < pre) break;
                 }
-                else if (nums[k] < x) {
-                    cout << "break:" << k << endl;
-                    break;
+                if (k == n) {
+                    ans = min(ans, dp[i][j]);
                 }
             }
-            if (nums[k] > x && cnt > 0) {
-                int t = x;
-                x = nums[k];
-                nums[k] = t;
-                ans++;
-            }
-            if (need[k]) {
-                cnt--;
-            }
         }
-        if (k != n) {
-            cout << -1 << endl;
-        } else {
-            cout << ans << endl;
-        }
+        // dumpGraph(dp, 5, 6);
+
+        cout << ((ans == INF) ? -1 : ans) << endl;
     }
     return 0;
 }
