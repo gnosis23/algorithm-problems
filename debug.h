@@ -22,7 +22,8 @@ inline void dumpGraph(int graph[][ARRAY_SIZE], int r, int c) {
 #endif
 }
 
-inline void dumpArray(int *dp, int r) {
+template<typename T>
+inline void dumpArray(T *dp, int r) {
 #ifdef XDebug   
     for(int i = 0; i < r; ++i) {
         cout << dp[i] << " ";
