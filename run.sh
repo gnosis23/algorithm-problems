@@ -1,2 +1,2 @@
 make
-./app < sample.txt
+time ./app < sample.txt
