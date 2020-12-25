@@ -1,7 +1,7 @@
 /**
  * author: BohaoWang (bj050323@gmail.com)
- * id:
- * tag:
+ * id: http://codeforces.com/problemset/problem/1293/B
+ * tag: combinatorics
  */
 #include <iostream>
 #include <iomanip>
@@ -41,6 +41,11 @@ int main(int argc, char const *argv[])
 {
     ios_base::sync_with_stdio(false);
     int n, t;
-    cin >> n >> t;
+    double ans = 1;
+    scanf("%d", &n);
+    for (int i = 2; i <= n; ++i) {
+        ans += ((double)1 / i);
+    }
+    printf("%.10lf\n", ans);
     return 0;
 }

@@ -1,2 +1,1 @@
-make
-time ./app < sample.txt
+make && ./app < sample.txt

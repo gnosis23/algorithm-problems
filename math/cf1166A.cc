@@ -1,7 +1,7 @@
 /**
  * author: BohaoWang (bj050323@gmail.com)
- * id:
- * tag:
+ * id: http://codeforces.com/problemset/problem/1166/A
+ * tag: combinatorics
  */
 #include <iostream>
 #include <iomanip>
@@ -28,7 +28,7 @@ typedef long long ll;
 typedef pair<int,int> PII;
 
 #define INF 1e9
-#define MAXN 100
+#define MAXN 101
 
 #ifndef XDebug
 #define dumpArray(...) 42
@@ -36,11 +36,31 @@ typedef pair<int,int> PII;
 #endif
 
 // CODE HERE
+// 不能超过20
+int names[26];
 
 int main(int argc, char const *argv[])
 {
     ios_base::sync_with_stdio(false);
     int n, t;
-    cin >> n >> t;
+    cin >> n;
+    string name;
+    memset(names, 0, sizeof(names));
+    for(int i = 0; i < n; ++i) {
+        cin >> name;
+        names[name[0] - 'a']++;
+    }
+    ll ans = 0;
+    for(int i = 0; i < 26; ++i) {
+        int x = names[i] / 2;
+        int y = names[i] - x;
+        if (x >= 2) {
+            ans += x*(x-1)/2;
+        }
+        if (y >= 2) {
+            ans += y*(y-1)/2;
+        }
+    }
+    cout << ans << endl;
     return 0;
 }
