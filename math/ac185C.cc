@@ -1,8 +1,8 @@
 /**
  * author: BohaoWang (bj050323@gmail.com)
- * id:
- * tag:
- */
+ * id: https://atcoder.jp/contests/abc185/tasks/abc185_c
+ * tag: combinatorics
+ **/
 #include <iostream>
 #include <iomanip>
 #include <cstdio>
@@ -29,7 +29,7 @@ typedef long long ll;
 typedef pair<int,int> PII;
 
 #define INF 1e9
-#define MAXN 100
+#define MAXN 101
 
 #ifndef XDebug
 #define dumpArray(...) 42
@@ -37,11 +37,23 @@ typedef pair<int,int> PII;
 #endif
 
 // CODE HERE
+// caution: overflow
+ll nCk(int n, int k) {
+    ll s = 1;
+    k = min(k, n-k);
+    for (ll d = 1; d <= k; ++d) {
+        s *= n--;
+        s /= d;
+    }
+    return s;
+}
 
 int main(int argc, char const *argv[])
 {
     ios_base::sync_with_stdio(false);
     int n, t;
-    cin >> n >> t;
+    cin >> n;
+    cout << nCk(n - 1, 11) << endl;
+    cout << nCk(100, 50) << endl;
     return 0;
 }

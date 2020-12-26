@@ -36,6 +36,16 @@ typedef pair<int,int> PII;
 #endif
 
 // CODE HERE
+// caution: overflow
+ll nCk(int n, int k) {
+    ll s = 1;
+    for (ll d = 1; d <= k; ++d) {
+        s *= n--;
+        s /= d;
+    }
+    return s;
+}
+
 // 不能超过20
 int names[26];
 
@@ -55,10 +65,10 @@ int main(int argc, char const *argv[])
         int x = names[i] / 2;
         int y = names[i] - x;
         if (x >= 2) {
-            ans += x*(x-1)/2;
+            ans += nCk(x, 2);
         }
         if (y >= 2) {
-            ans += y*(y-1)/2;
+            ans += nCk(y, 2);
         }
     }
     cout << ans << endl;
