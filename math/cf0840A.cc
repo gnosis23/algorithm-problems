@@ -1,6 +1,6 @@
 /**
  * author: BohaoWang (bj050323@gmail.com)
- * id:
+ * id: https://codeforces.com/problemset/problem/840/A
  * tag:
  */
 #include <iostream>

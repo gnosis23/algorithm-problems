@@ -1,7 +1,7 @@
 /**
  * author: BohaoWang (bj050323@gmail.com)
- * id:
- * tag:
+ * id: https://codeforces.com/problemset/problem/617/B
+ * tag: binary search, nCk, two pointer
  */
 #include <iostream>
 #include <iomanip>
@@ -30,7 +30,6 @@ typedef pair<int,int> PII;
 
 #define INF 1e9
 #define MAXN 100
-#define all(A) A.begin(), A.end()
 
 #ifndef XDebug
 #define dumpArray(...) 42
@@ -43,6 +42,25 @@ int main(int argc, char const *argv[])
 {
     ios_base::sync_with_stdio(false);
     int n, t;
-    cin >> n >> t;
+    cin >> n;
+    vector<int> A(n);
+    int prev = -1;
+    ll ans = 1;
+    int cnt = 0;
+    for(int i = 0; i < n; ++i) {
+        cin >> A[i];
+        if (A[i] == 1) {
+            cnt++;
+            if (prev != -1) {
+                ans *= (i - prev);
+            }
+            prev = i;
+        }
+    }
+    if (cnt == 0) {
+        cout << 0 << endl;
+    } else {
+        cout << ans << endl;
+    }
     return 0;
 }
