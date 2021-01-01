@@ -1,7 +1,7 @@
 /**
  * author: BohaoWang (bj050323@gmail.com)
- * id:
- * tag:
+ * id: https://codeforces.com/contest/1466/problem/E
+ * tag: bitmask | math
  */
 #include <iostream>
 #include <iomanip>
@@ -39,57 +39,42 @@ typedef pair<int,int> PII;
 
 // CODE HERE
 #define MOD 1000000007
-int G[100][100];
-
-void solve(int n, vector<ll> &A) {
-    ll ans = 0;
-    for (int i = 0; i < n; ++i)
-    {
-        for (int j = 0; j < n; ++j)
-        {
-            for (int k = 0; k < n; ++k)
-            {
-                ll x = (A[i] & A[j]) * (A[j] | A[k]);
-                bitset<8> bb(x);
-                ans = (ans + x) % MOD;
-            }
-        }
-    }
-    G[A[0]][A[1]] = ans - A[0] * A[0] - A[1] * A[1];
-    cout << A[0] << " " << A[1] << " " << ans << endl;
-}
 
 int main(int argc, char const *argv[])
 {
     ios_base::sync_with_stdio(false);
     int n, t;
-    // cin >> t;
-    // while (t--) {
-    //     // cin >> n;
-    //     n = 2;
-    //     vector<ll> A(n);
-    //     // for (int i = 0; i < n; ++i) {
-    //         // cin >> A[i];
-    //     // }
-    //     A[0] = 1;
-    //     A[1] = t;
-    //     solve(n, A);
-    // }
-    for (int j = 0; j < 10; ++j) {
-    for (int i = 0; i < 10; ++i) {
-        n = 2;
+    cin >> t;
+    while (t--) {
+        cin >> n;
         vector<ll> A(n);
-        A[0] = j;
-        A[1] = i;
-        solve(n, A);
-    }
-    }
+        vector<int> bitCount(61, 0);
 
-    for (int i = 0; i < 10; ++i) {
-        for (int j = 0; j < 10; ++j) {
-            printf("%4d ", G[i][j]);
+        for (int i = 0; i < n; ++i) {
+            cin >> A[i];
         }
-        printf("\n");
+        for (int i = 0; i < 60; ++i) {
+            for (int j = 0; j < n; ++j) {
+                bitCount[i] += (A[j] >> i) & 1;
+            }
+        }
+
+        ll ans = 0;
+        for (int i = 0; i < n; ++i) {
+            ll sum1 = 0;
+            ll sum2 = 0;
+            for (int c = 0; c < 60; ++c) {
+                if (A[i] & (1LL << c)) {
+                    sum1 = (sum1 + (((1LL << c) % MOD) * bitCount[c])) % MOD;
+                    sum2 = (sum2 + (((1LL << c) % MOD) * n)) % MOD;
+                }
+                else {
+                    sum2 = (sum2 + (((1LL << c) % MOD) * bitCount[c])) % MOD;
+                }
+            }
+            ans = (ans + sum1 * sum2) % MOD;
+        }
+        cout << ans << endl;
     }
     return 0;
 }
